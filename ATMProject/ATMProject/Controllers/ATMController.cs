@@ -20,19 +20,19 @@ namespace ATMProject.Controllers
         [HttpGet]
         public IEnumerable<CustomerDetails> GetCustomerDetails()
         {
-            return atmdbcontext.CustomerDetail.ToList();
+            return atmdbcontext.customerDetails.ToList();
         }
         [HttpGet("GetAccountNumber")]
-        public CustomerDetails GetAccountNumber(int AccountNumber)
+        public CustomerDetails GetAccountNumber(long AccountNumber)
         {
-            return atmdbcontext.CustomerDetail.Find(AccountNumber);
+            return atmdbcontext.customerDetails.Find(AccountNumber);
         }
         [HttpPost("InsertCustomer")]
         public IActionResult InsertCargo([FromBody] CustomerDetails customerDetails)
         {
             if (customerDetails.AccountNumber.ToString() != "")
             {
-                atmdbcontext.CustomerDetail.Add(customerDetails);
+                atmdbcontext.customerDetails.Add(customerDetails);
                 atmdbcontext.SaveChanges();
                 return Ok("Customer Details saved successfully!");
             }

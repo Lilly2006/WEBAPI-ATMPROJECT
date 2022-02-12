@@ -12,6 +12,6 @@ namespace ATMProject.Model
         {
 
         }
-        public DbSet<CustomerDetails> CustomerDetail { get; set; }
+        public DbSet<CustomerDetails> customerDetails { get; set; }
     }
 }
