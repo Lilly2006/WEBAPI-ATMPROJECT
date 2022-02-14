@@ -38,11 +38,11 @@ namespace ATMProject
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ATMApi", Version = "v1" });
             });
-<<<<<<< HEAD
-           services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
-=======
+
+          
+
             services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
->>>>>>> 4936ff935a461901b3f767b3cc71e6366f3f7487
+
             {
                 builder.SetIsOriginAllowed(_ => true)
                        .AllowAnyMethod()
