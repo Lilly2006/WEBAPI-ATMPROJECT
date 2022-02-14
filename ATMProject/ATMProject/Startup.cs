@@ -29,19 +29,22 @@ namespace ATMProject
         {
             var connectionstring = Configuration.GetConnectionString("SqlConnection");
             services.AddDbContext<ATMDbContext>(options => options.UseSqlServer(connectionstring));
-            services.AddControllers();
+            services.AddControllers()
+                  .AddNewtonsoftJson(o => o.SerializerSettings.ReferenceLoopHandling =
+        Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
 
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ATMApi", Version = "v1" });
             });
-            /*services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+           services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
             {
                 builder.SetIsOriginAllowed(_ => true)
                        .AllowAnyMethod()
                        .AllowAnyHeader()
                        .AllowCredentials();
-            }));*/
+            }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,7 +57,7 @@ namespace ATMProject
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ATMApi v1"));
             app.UseRouting();
-
+            app.UseCors("MyPolicy");
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
