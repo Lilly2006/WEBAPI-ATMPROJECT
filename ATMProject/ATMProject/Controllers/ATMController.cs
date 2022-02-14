@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ATMProject.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ATMProject.Controllers
 {
@@ -34,12 +35,35 @@ namespace ATMProject.Controllers
             {
                 atmdbcontext.customerDetails.Add(customerDetails);
                 atmdbcontext.SaveChanges();
-                return Ok("Customer Details saved successfully!");
+                return Ok();
             }
             else
             {
                 return BadRequest();
             }
+        }
+        [HttpPut("UpdateCustomer")]
+        public IActionResult UpdateCustomer([FromBody] CustomerDetails customerDetails)
+        {
+            if (customerDetails.AccountNumber.ToString() != "")
+            {
+                atmdbcontext.Entry(customerDetails).State = EntityState.Modified;
+                atmdbcontext.SaveChanges();
+                return Ok("Customer Details updated successfully!");
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+        [HttpDelete("DeleteCustomer")]
+        public IActionResult DeleteCustomer(long AccountNumber)
+        {
+            var result = atmdbcontext.customerDetails.Find(AccountNumber);
+            atmdbcontext.customerDetails.Remove(result);
+            atmdbcontext.SaveChanges();
+            return Ok("Deleted Successfully");
+
         }
     }
 }

@@ -12,6 +12,12 @@ namespace ATMProject.Model
         {
 
         }
+       /* protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<TransactionDetails>().Property(x => x.AccountNumber).HasColumnType("long").HasPrecision(17, 3);
+        }*/
+
         public DbSet<CustomerDetails> customerDetails { get; set; }
+        public DbSet<TransactionDetails> transactionDetails { get; set; }
     }
 }

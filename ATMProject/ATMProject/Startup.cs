@@ -29,13 +29,20 @@ namespace ATMProject
         {
             var connectionstring = Configuration.GetConnectionString("SqlConnection");
             services.AddDbContext<ATMDbContext>(options => options.UseSqlServer(connectionstring));
-            services.AddControllers();
+            services.AddControllers()
+                  .AddNewtonsoftJson(o => o.SerializerSettings.ReferenceLoopHandling =
+        Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
 
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ATMApi", Version = "v1" });
             });
+<<<<<<< HEAD
+           services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+=======
             services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+>>>>>>> 4936ff935a461901b3f767b3cc71e6366f3f7487
             {
                 builder.SetIsOriginAllowed(_ => true)
                        .AllowAnyMethod()
@@ -54,7 +61,7 @@ namespace ATMProject
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ATMApi v1"));
             app.UseRouting();
-
+            app.UseCors("MyPolicy");
             app.UseAuthorization();
 
             app.UseCors("MyPolicy");
